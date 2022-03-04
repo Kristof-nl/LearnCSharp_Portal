@@ -11,6 +11,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
     builder.Configuration.GetConnectionString("DefaultConnection")
     ));
 
+// Services
+//builder.Services.AddScoped<IBankAccountService, BankAccountService>();
+
+// Repositories
+//builder.Services.AddScoped<IBankAccountRepository, BankAccountRepository>();
+
+//builder.Services.AddAutoMapper(typeof(AutoMapperBankAccount).Assembly, typeof(AutoMapperTransaction).Assembly);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

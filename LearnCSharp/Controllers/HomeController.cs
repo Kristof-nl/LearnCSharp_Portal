@@ -1,4 +1,4 @@
-﻿using LearnCSharp.Models;
+﻿using Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
