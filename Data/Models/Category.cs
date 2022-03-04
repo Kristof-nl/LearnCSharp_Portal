@@ -1,9 +1,8 @@
-﻿using Generics;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Data.Models
 {
-    public class Category : IEntity
+    public class Category
     {
         public int Id { get; set; }
         [Required]
