@@ -1,4 +1,6 @@
 using Data;
+using Data.Repository;
+using Data.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,11 +12,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
     builder.Configuration.GetConnectionString("DefaultConnection")
     ));
 
-// Services
-//builder.Services.AddScoped<IBankAccountService, BankAccountService>();
 
 // Repositories
-//builder.Services.AddScoped<IBankAccountRepository, BankAccountRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 //builder.Services.AddAutoMapper(typeof(AutoMapperBankAccount).Assembly, typeof(AutoMapperTransaction).Assembly);
 
