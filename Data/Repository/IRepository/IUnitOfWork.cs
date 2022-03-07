@@ -9,6 +9,7 @@ namespace Data.Repository.IRepository
     public interface IUnitOfWork
     {
         ICategoryRepository Category { get; }
+        ISubcategoryRepository Subcategory { get; }
 
         void Save();
     }
