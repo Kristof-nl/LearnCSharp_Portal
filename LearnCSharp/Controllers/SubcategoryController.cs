@@ -36,23 +36,18 @@ namespace LearnCSharp.Controllers
             if (ModelState.IsValid)
             {
                 var categoryFromDb = _unitOfWork.Category.GetFirstOrDefault(i => i.Id == id);
+                obj.Id = 0;
+                obj.Category = categoryFromDb;
                 _unitOfWork.Subcategory.Add(obj);
-                //categoryFromDb.Subcategories.Add( new Subcategory
-                //{
-                //    Name = obj.Name,
-                //    Category = categoryFromDb,
-
-                //});
-                _unitOfWork.Category.Add(categoryFromDb);
                 _unitOfWork.Save();
                 TempData["success"] = "Subcategory created successfully";
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { Id = id });
             }
             return View(obj);
         }
 
         //GET
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int? id, int? id2)
         {
             if(id == null || id == 0)
             {
@@ -66,38 +61,42 @@ namespace LearnCSharp.Controllers
                 return NotFound();
             }
 
+            ViewBag.Id = id2;
+
             return View(subcategoryFromDb);
         }
 
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Subcategory obj)
+        public IActionResult Edit(Subcategory obj, int categoryId)
         {
             if (ModelState.IsValid)
             {
                 _unitOfWork.Subcategory.Update(obj);
                 _unitOfWork.Save();
                 TempData["success"] = "Subcategory updated successfully";
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { Id = categoryId});
             }
             return View(obj);
         }
 
         //GET
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(int? id, int? id2)
         {
             if (id == null || id == 0)
             {
                 return NotFound();
             }
 
-            var categoryFromDb = _unitOfWork.Category.GetFirstOrDefault(i => i.Id == id);
+            var categoryFromDb = _unitOfWork.Subcategory.GetFirstOrDefault(i => i.Id == id);
 
             if (categoryFromDb == null)
             {
                 return NotFound();
             }
+
+            ViewBag.Id = id2;
 
             return View(categoryFromDb);
         }
@@ -105,19 +104,19 @@ namespace LearnCSharp.Controllers
         //DELETE
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeletePOST(int? id)
+        public IActionResult DeletePOST(int? id, int categoryId)
             {
-            var categoryFromDb = _unitOfWork.Category.GetFirstOrDefault(i => i.Id == id);
+            var categoryFromDb = _unitOfWork.Subcategory.GetFirstOrDefault(i => i.Id == id);
 
             if (categoryFromDb == null)
             {
                 return NotFound();
             }
 
-            _unitOfWork.Category.Remove(categoryFromDb);
+            _unitOfWork.Subcategory.Remove(categoryFromDb);
             _unitOfWork.Save();
-            TempData["success"] = "Category deleted successfully";
-            return RedirectToAction("Index");
+            TempData["success"] = "Supcategory deleted successfully";
+            return RedirectToAction("Index", new { Id = categoryId });
         }
     }
 }
