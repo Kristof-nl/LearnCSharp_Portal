@@ -15,10 +15,12 @@ namespace Data.Repository
             _db = db;
             Category = new CategoryRepository(_db);
             Subcategory = new SubcategoryRepository(_db);
+            Tutorial = new TutorialRepository(_db);
         }
 
         public ICategoryRepository Category { get; private set; }
         public ISubcategoryRepository Subcategory { get; private set; }
+        public ITutorialRepository Tutorial { get; private set; }
 
         public void Save()
         {

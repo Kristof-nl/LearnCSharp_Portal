@@ -1,0 +1,26 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+
+namespace Data.Models
+{
+    public class Tutorial
+    {
+        public int Id { get; set; }
+        [Required]
+        public string Name { get; set; }
+        [Required]
+        public string Author { get; set; }
+        [Required]
+        public string Description { get; set; }
+        public string ImgUrl { get; set; }
+
+        public int UserScore{ get; set; } = 0;
+        [Required]
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
+        [Required]
+        public int SubcategoryId { get; set; }
+        public Subcategory Subcategory { get; set; }
+
+    }
+}

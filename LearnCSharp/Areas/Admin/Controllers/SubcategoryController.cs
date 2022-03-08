@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LearnCSharp.Controllers
 {
+    [Area("Admin")]
     public class SubcategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
