@@ -1,7 +1,9 @@
 ﻿
 using Data;
 using Data.Models;
+using Data.Models.ViewModels;
 using Data.Repository.IRepository;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -11,12 +13,13 @@ namespace LearnCSharp.Controllers
     public class TutorialController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public TutorialController(IUnitOfWork unitOfWork, ApplicationDbContext dbContext)
+
+        public TutorialController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment)
         {
             _unitOfWork = unitOfWork;
-            _dbContext = dbContext;
+            _hostEnvironment = hostEnvironment;
         }
 
         public IActionResult Index()
@@ -29,25 +32,26 @@ namespace LearnCSharp.Controllers
         //GET
         public IActionResult Upsert(int? id)
         {
-            Tutorial tutorial = new();
-            IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select(
-               u => new SelectListItem
-               {
-                   Text = u.Name,
-                   Value = u.Id.ToString()
-               });
-            IEnumerable<SelectListItem> SubcategoryList = _unitOfWork.Subcategory.GetAll().Select(
-               u => new SelectListItem
-               {
-                   Text = u.Name,
-                   Value = u.Id.ToString()
-               });
+            TutorialVM tutorialVM = new()
+            {
+                Tutorial = new(),
+                CategoryList = _unitOfWork.Category.GetAll().Select(x => new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString()
+                }),
+                SubcategoryList = _unitOfWork.Subcategory.GetAll().Select(x => new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString()
+                }),
+            };
+
             if (id == null || id == 0)
             {
                 //Create tutorial
-                ViewBag.CategoryList = CategoryList;
-                ViewBag.SubcategoryList = SubcategoryList;
-                return View(tutorial);
+                
+                return View(tutorialVM);
             }
             else
             {
@@ -55,19 +59,35 @@ namespace LearnCSharp.Controllers
 
             }
 
-            return View(tutorial);
+            return View(tutorialVM);
         }
 
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(Tutorial obj)
+        public IActionResult Upsert(TutorialVM obj, IFormFile file)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Tutorial.Update(obj);
+                //Add uploaded files to wwwroot/img/tutorials
+                string wwwRootPath = _hostEnvironment.WebRootPath;
+                if(file != null)
+                {
+                    string fileName = Guid.NewGuid().ToString();
+                    var uploads = Path.Combine(wwwRootPath, @"img\tutorials");
+                    var extension = Path.GetExtension(file.FileName);
+
+                    using (var fileStreams = new FileStream(Path.Combine(uploads,fileName+extension), FileMode.Create))
+                    {
+                        file.CopyTo(fileStreams);
+                    }
+                    obj.Tutorial.ImgUrl = @"img\tutorials" + fileName + extension;
+                }
+                    
+
+                _unitOfWork.Tutorial.Add(obj.Tutorial);
                 _unitOfWork.Save();
-                TempData["success"] = "Tutorial updated successfully";
+                TempData["success"] = "Tutorial created successfully";
                 return RedirectToAction("Index");
             }
             return View(obj);
