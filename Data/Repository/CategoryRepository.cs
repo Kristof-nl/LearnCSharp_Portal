@@ -20,5 +20,6 @@ namespace Data.Repository
         {
             _db.Categories.Update(obj);
         }
+
     }
 }

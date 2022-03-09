@@ -11,10 +11,12 @@ namespace LearnCSharp.Controllers
     public class TutorialController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ApplicationDbContext _dbContext;
 
-        public TutorialController(IUnitOfWork unitOfWork)
+        public TutorialController(IUnitOfWork unitOfWork, ApplicationDbContext dbContext)
         {
             _unitOfWork = unitOfWork;
+            _dbContext = dbContext;
         }
 
         public IActionResult Index()
@@ -43,11 +45,14 @@ namespace LearnCSharp.Controllers
             if (id == null || id == 0)
             {
                 //Create tutorial
+                ViewBag.CategoryList = CategoryList;
+                ViewBag.SubcategoryList = SubcategoryList;
                 return View(tutorial);
             }
             else
             {
                 //Update
+
             }
 
             return View(tutorial);

@@ -23,13 +23,18 @@
          </div>
          <div class="mb-3">
             <label asp-for="Category"></label>
-            <input asp-for="Category" class="form-control" />
+            <select asp-for="Category" asp-items="ViewBag.CategoryList" class="form-select">
             <span asp-validation-for="Category" class="text-danger"></span>
+            <option disabled selected>--Select Category</option>
+            </select>
          </div>
          <div class="mb-3">
             <label asp-for="Subcategory"></label>
-            <input asp-for="Subcategory" class="form-control" />
+            <select asp-for="Subcategory" asp-items="ViewBag.SubcategoryList" class="form-select">
             <span asp-validation-for="Subcategory" class="text-danger"></span>
+            <option disabled selected>--Select Subcategory</option>
+            </select>
+
          </div>
          <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
          <a asp-controller="Tutorial" asp-action="Index" class="btn btn-secondary" style="width:150px">
@@ -37,6 +42,9 @@
          </a>
     </div>
 </form>
+    
+
+ 
 
 @section Scripts{
     @{

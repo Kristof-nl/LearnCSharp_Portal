@@ -18,11 +18,11 @@ namespace Data.Models
         [NotMapped]
         public double UsersScore => UserScores.Sum(score => score.Score)/ UserScores.Count;
         [Required]
-        public int CategoryId { get; set; }
-        public Category Category { get; set; }
+        public int? CategoryId { get; set; }
+        public Category? Category { get; set; }
         [Required]
-        public int SubcategoryId { get; set; }
-        public Subcategory Subcategory { get; set; }
+        public int? SubcategoryId { get; set; }
+        public Subcategory? Subcategory { get; set; }
 
 
     }
