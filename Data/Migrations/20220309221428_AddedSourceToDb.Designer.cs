@@ -4,6 +4,7 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220309221428_AddedSourceToDb")]
+    partial class AddedSourceToDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,7 +38,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Data.Models.Source", b =>
@@ -53,7 +55,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Sources", (string)null);
+                    b.ToTable("Sources");
                 });
 
             modelBuilder.Entity("Data.Models.Subcategory", b =>
@@ -75,7 +77,7 @@ namespace Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Subcategories", (string)null);
+                    b.ToTable("Subcategories");
                 });
 
             modelBuilder.Entity("Data.Models.Tutorial", b =>
@@ -124,7 +126,7 @@ namespace Data.Migrations
 
                     b.HasIndex("SubcategoryId");
 
-                    b.ToTable("Tutorials", (string)null);
+                    b.ToTable("Tutorials");
                 });
 
             modelBuilder.Entity("Data.Models.UserScore", b =>
@@ -145,7 +147,7 @@ namespace Data.Migrations
 
                     b.HasIndex("TutorialId");
 
-                    b.ToTable("UserScore", (string)null);
+                    b.ToTable("UserScore");
                 });
 
             modelBuilder.Entity("Data.Models.Subcategory", b =>

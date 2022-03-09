@@ -4,6 +4,7 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220309204903_AddednullableToScores")]
+    partial class AddednullableToScores
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,24 +38,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
-                });
-
-            modelBuilder.Entity("Data.Models.Source", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Sources", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Data.Models.Subcategory", b =>
@@ -75,7 +60,7 @@ namespace Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Subcategories", (string)null);
+                    b.ToTable("Subcategories");
                 });
 
             modelBuilder.Entity("Data.Models.Tutorial", b =>
@@ -101,13 +86,6 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Link")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SourceId")
-                        .HasColumnType("int");
-
                     b.Property<int>("SubcategoryId")
                         .HasColumnType("int");
 
@@ -119,12 +97,9 @@ namespace Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("SourceId")
-                        .IsUnique();
-
                     b.HasIndex("SubcategoryId");
 
-                    b.ToTable("Tutorials", (string)null);
+                    b.ToTable("Tutorials");
                 });
 
             modelBuilder.Entity("Data.Models.UserScore", b =>
@@ -138,14 +113,14 @@ namespace Data.Migrations
                     b.Property<double>("Score")
                         .HasColumnType("float");
 
-                    b.Property<int?>("TutorialId")
+                    b.Property<int>("TutorialId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TutorialId");
 
-                    b.ToTable("UserScore", (string)null);
+                    b.ToTable("UserScore");
                 });
 
             modelBuilder.Entity("Data.Models.Subcategory", b =>
@@ -165,12 +140,6 @@ namespace Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Data.Models.Source", "Source")
-                        .WithOne("Tutorial")
-                        .HasForeignKey("Data.Models.Tutorial", "SourceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Data.Models.Subcategory", "Subcategory")
                         .WithMany()
                         .HasForeignKey("SubcategoryId")
@@ -179,8 +148,6 @@ namespace Data.Migrations
 
                     b.Navigation("Category");
 
-                    b.Navigation("Source");
-
                     b.Navigation("Subcategory");
                 });
 
@@ -188,7 +155,9 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Models.Tutorial", "Tutorial")
                         .WithMany("UserScores")
-                        .HasForeignKey("TutorialId");
+                        .HasForeignKey("TutorialId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Tutorial");
                 });
@@ -196,11 +165,6 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Models.Category", b =>
                 {
                     b.Navigation("Subcategories");
-                });
-
-            modelBuilder.Entity("Data.Models.Source", b =>
-                {
-                    b.Navigation("Tutorial");
                 });
 
             modelBuilder.Entity("Data.Models.Tutorial", b =>

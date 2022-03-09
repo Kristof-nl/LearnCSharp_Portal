@@ -18,7 +18,7 @@
          </div>
          <div class="mb-3">
             <label asp-for="Tutorial.ImgUrl"></label>
-            <input type="file" id="uploadBox" class="form-control" />
+            <input type="file" id="uploadBox" name="file" class="form-control" />
          </div>
          <div class="mb-3">
             <label asp-for="Tutorial.Description"></label>
@@ -36,6 +36,17 @@
             <select asp-for="Tutorial.SubcategoryId" asp-items="@Model.SubcategoryList" class="form-select">
             <option disabled selected>--Select Subcategory</option>
             </select>
+         </div>
+         <div class="mb-3">
+            <label asp-for="Tutorial.SourceId"></label>
+            <select asp-for="Tutorial.SourceId" asp-items="@Model.SourceList" class="form-select">
+            <option disabled selected>--Select Source--</option>
+            </select>
+         </div>
+         <div class="mb-3">
+            <label asp-for="Tutorial.Link"></label>
+            <input asp-for="Tutorial.Link" class="form-control" />
+            <span asp-validation-for="Tutorial.Link" class="text-danger"></span>
          </div>
         @if(Model.Tutorial.Id != 0)
         {

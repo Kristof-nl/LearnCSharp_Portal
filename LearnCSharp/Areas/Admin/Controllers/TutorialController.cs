@@ -24,8 +24,7 @@ namespace LearnCSharp.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Tutorial> objCategoryList = _unitOfWork.Tutorial.GetAll();
-            return View(objCategoryList);
+            return View();
         }
 
 
@@ -41,6 +40,11 @@ namespace LearnCSharp.Controllers
                     Value = x.Id.ToString()
                 }),
                 SubcategoryList = _unitOfWork.Subcategory.GetAll().Select(x => new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString()
+                }),
+                SourceList = _unitOfWork.Source.GetAll().Select(x => new SelectListItem
                 {
                     Text = x.Name,
                     Value = x.Id.ToString()
@@ -65,7 +69,7 @@ namespace LearnCSharp.Controllers
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(TutorialVM obj, IFormFile file)
+        public IActionResult Upsert(TutorialVM obj, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
@@ -74,16 +78,15 @@ namespace LearnCSharp.Controllers
                 if (file != null)
                 {
                     string fileName = Guid.NewGuid().ToString();
-                    var uploads = Path.Combine(wwwRootPath, @"img\tutorials");
+                    var uploads = Path.Combine(wwwRootPath, @"img\tutorial");
                     var extension = Path.GetExtension(file.FileName);
 
                     using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
                     {
                         file.CopyTo(fileStreams);
                     }
-                    obj.Tutorial.ImgUrl = @"img\tutorials" + fileName + extension;
+                    obj.Tutorial.ImgUrl = @"img\tutorial" + fileName + extension;
                 }
-
 
                 _unitOfWork.Tutorial.Add(obj.Tutorial);
                 _unitOfWork.Save();
@@ -128,5 +131,14 @@ namespace LearnCSharp.Controllers
             TempData["success"] = "Tutorial deleted successfully";
             return RedirectToAction("Index");
         }
+
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var productList = _unitOfWork.Tutorial.GetAll();
+            return Json(new { data = productList});
+        }
+        #endregion
     }
 }

@@ -11,6 +11,7 @@ namespace Data.Repository.IRepository
         ICategoryRepository Category { get; }
         ISubcategoryRepository Subcategory { get; }
         ITutorialRepository Tutorial { get; }
+        ISourceRepository Source { get; }
 
         void Save();
     }

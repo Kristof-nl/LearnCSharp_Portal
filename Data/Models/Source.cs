@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Data.Models
 {
-    public class UserScore
+    public class Source
     {
         public int Id { get; set; }
-        public double Score { get; set; } = 10;
+        public string Name { get; set; }
         public Tutorial? Tutorial { get; set; }
     }
 }
