@@ -1,45 +1,72 @@
-﻿@model Tutorial
+﻿@model Data.Models.ViewModels.TutorialVM
 
-<form method="post" asp-action="Upsert">
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
     <div class="border p-3 mt-4">
         <div class="row pb-2">
-            <h2 class="text-primary">Edit Tutorial</h2>
+            <h2 class="text-primary">@(Model.Tutorial.Id !=0 ? "Update": "Create") Tutorial</h2>
         </div>
         @*<div asp-validation-summary="All"></div>*@
         <div class="mb-3">
-            <label asp-for="Title"></label>
-            <input asp-for="Title" class="form-control" />
-            <span asp-validation-for="Title" class="text-danger"></span>
+            <label asp-for="Tutorial.Title"></label>
+            <input asp-for="Tutorial.Title" class="form-control" />
+            <span asp-validation-for="Tutorial.Title" class="text-danger"></span>
          </div>
          <div class="mb-3">
-            <label asp-for="Author"></label>
-            <input asp-for="Author" class="form-control" />
-            <span asp-validation-for="Author" class="text-danger"></span>
+            <label asp-for="Tutorial.Author"></label>
+            <input asp-for="Tutorial.Author" class="form-control" />
+            <span asp-validation-for="Tutorial.Author" class="text-danger"></span>
          </div>
          <div class="mb-3">
-            <label asp-for="Description"></label>
-            <textarea asp-for="Description" rows="3" class="form-control"></textarea>
-            <span asp-validation-for="Description" class="text-danger"></span>
+            <label asp-for="Tutorial.ImgUrl"></label>
+            <input type="file" id="uploadBox" class="form-control" />
          </div>
          <div class="mb-3">
-            <label asp-for="Category"></label>
-            <input asp-for="Category" class="form-control" />
-            <span asp-validation-for="Category" class="text-danger"></span>
+            <label asp-for="Tutorial.Description"></label>
+            <textarea asp-for="Tutorial.Description" rows="3" class="form-control"></textarea>
+            <span asp-validation-for="Tutorial.Description" class="text-danger"></span>
+         </div>
+        <div class="mb-3">
+            <label asp-for="Tutorial.CategoryId"></label>
+            <select asp-for="Tutorial.CategoryId" asp-items="@Model.CategoryList" class="form-select">
+            <option disabled selected>--Select Category</option>
+            </select>
          </div>
          <div class="mb-3">
-            <label asp-for="Subcategory"></label>
-            <input asp-for="Subcategory" class="form-control" />
-            <span asp-validation-for="Subcategory" class="text-danger"></span>
+            <label asp-for="Tutorial.SubcategoryId"></label>
+            <select asp-for="Tutorial.SubcategoryId" asp-items="@Model.SubcategoryList" class="form-select">
+            <option disabled selected>--Select Subcategory</option>
+            </select>
          </div>
-         <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+        @if(Model.Tutorial.Id != 0)
+        {
+            <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+        }
+        else
+        {
+            <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
+        }
          <a asp-controller="Tutorial" asp-action="Index" class="btn btn-secondary" style="width:150px">
              Back to List
          </a>
     </div>
 </form>
+    
+
+ 
 
 @section Scripts{
     @{
         <partial name="_ValidationScriptsPartial" />
     }
+    <script>
+        function ValidateInput(){
+            if(document.getElementById("uploadBox").value==""){
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Please upload an image!',
+                })
+            }
+        }
+    </script>
 }
