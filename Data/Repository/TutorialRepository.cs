@@ -22,10 +22,10 @@ namespace Data.Repository
             if (objFromDb != null)
             {
                 //Explicity to avoid to update img URL
-                objFromDb.Name = obj.Name;
+                objFromDb.Title = obj.Title;
                 objFromDb.Author = obj.Author;
                 objFromDb.Description = obj.Description;
-                objFromDb.UserScore = obj.UserScore;
+                objFromDb.UserScores = obj.UserScores;
                 objFromDb.CategoryId = obj.CategoryId;
                 objFromDb.Category = obj.Category;
                 objFromDb.SubcategoryId = obj.SubcategoryId;

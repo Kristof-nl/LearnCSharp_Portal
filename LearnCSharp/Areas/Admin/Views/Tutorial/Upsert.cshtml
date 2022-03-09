@@ -1,0 +1,45 @@
+﻿@model Tutorial
+
+<form method="post" asp-action="Upsert">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Edit Tutorial</h2>
+        </div>
+        @*<div asp-validation-summary="All"></div>*@
+        <div class="mb-3">
+            <label asp-for="Title"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+         </div>
+         <div class="mb-3">
+            <label asp-for="Author"></label>
+            <input asp-for="Author" class="form-control" />
+            <span asp-validation-for="Author" class="text-danger"></span>
+         </div>
+         <div class="mb-3">
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" rows="3" class="form-control"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+         </div>
+         <div class="mb-3">
+            <label asp-for="Category"></label>
+            <input asp-for="Category" class="form-control" />
+            <span asp-validation-for="Category" class="text-danger"></span>
+         </div>
+         <div class="mb-3">
+            <label asp-for="Subcategory"></label>
+            <input asp-for="Subcategory" class="form-control" />
+            <span asp-validation-for="Subcategory" class="text-danger"></span>
+         </div>
+         <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+         <a asp-controller="Tutorial" asp-action="Index" class="btn btn-secondary" style="width:150px">
+             Back to List
+         </a>
+    </div>
+</form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
