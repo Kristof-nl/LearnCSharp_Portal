@@ -13,10 +13,7 @@ namespace Data.Models
         [Required]
         public string Description { get; set; }
         public string ImgUrl { get; set; }
-
         public ICollection<UserScore> UserScores { get; set; }
-        [NotMapped]
-        public double UsersScore => UserScores.Sum(score => score.Score)/ UserScores.Count;
         [Required]
         public int CategoryId { get; set; }
         public Category Category { get; set; }
