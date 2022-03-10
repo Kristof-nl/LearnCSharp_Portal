@@ -2,52 +2,54 @@
 
 <form method="post" asp-action="Upsert" enctype="multipart/form-data">
     <div class="border p-3 mt-4">
-        <div class="row pb-2">
+        <div class="row">
             <h2 class="text-primary">@(Model.Tutorial.Id !=0 ? "Update": "Create") Tutorial</h2>
-        </div>
-        @*<div asp-validation-summary="All"></div>*@
-        <div class="mb-3">
-            <label asp-for="Tutorial.Title"></label>
-            <input asp-for="Tutorial.Title" class="form-control" />
-            <span asp-validation-for="Tutorial.Title" class="text-danger"></span>
+       
+            @*<div asp-validation-summary="All"></div>*@
+            <div class="mb-3 col-12 mt-2">
+                <label asp-for="Tutorial.Title"></label>
+                <input asp-for="Tutorial.Title" class="form-control" />
+                <span asp-validation-for="Tutorial.Title" class="text-danger"></span>
+             </div>
+             <div class="mb-3 col-6 mt-2">
+                <label asp-for="Tutorial.Author"></label>
+                <input asp-for="Tutorial.Author" class="form-control" />
+                <span asp-validation-for="Tutorial.Author" class="text-danger"></span>
+             </div>
+             <div class="mb-3 col-6 mt-2">
+                <label asp-for="Tutorial.ImgUrl"></label>
+                <input type="file" id="uploadBox" name="file" class="form-control" />
+             </div>
+             <div class="mb-3 col-12 mt-2">
+                <label asp-for="Tutorial.Description"></label>
+                <textarea asp-for="Tutorial.Description" rows="4" class="form-control"></textarea>
+                <span asp-validation-for="Tutorial.Description" class="text-danger"></span>
+             </div>
+            <div class="mb-3 col-6 mt-2">
+                <label asp-for="Tutorial.CategoryId"></label>
+                <select asp-for="Tutorial.CategoryId" asp-items="@Model.CategoryList" class="form-select">
+                <option disabled selected>--Select Category</option>
+                </select>
+             </div>
+             <div class="mb-3 col-6 mt-2">
+                <label asp-for="Tutorial.SubcategoryId"></label>
+                <select asp-for="Tutorial.SubcategoryId" asp-items="@Model.SubcategoryList" class="form-select">
+                <option disabled selected>--Select Subcategory--</option>
+                </select>
+             </div>
+             <div class="mb-3 col-lg-3 col-md-12 mt-2">
+                <label asp-for="Tutorial.SourceId"></label>
+                <select asp-for="Tutorial.SourceId" asp-items="@Model.SourceList" class="form-select">
+                <option disabled selected>--Select Source--</option>
+                </select>
+             </div>
+             <div class="mb-3 col-lg-9 col-md-12 mt-2">
+                <label asp-for="Tutorial.Link"></label>
+                <input asp-for="Tutorial.Link" class="form-control" />
+                <span asp-validation-for="Tutorial.Link" class="text-danger"></span>
+             </div>
          </div>
-         <div class="mb-3">
-            <label asp-for="Tutorial.Author"></label>
-            <input asp-for="Tutorial.Author" class="form-control" />
-            <span asp-validation-for="Tutorial.Author" class="text-danger"></span>
-         </div>
-         <div class="mb-3">
-            <label asp-for="Tutorial.ImgUrl"></label>
-            <input type="file" id="uploadBox" name="file" class="form-control" />
-         </div>
-         <div class="mb-3">
-            <label asp-for="Tutorial.Description"></label>
-            <textarea asp-for="Tutorial.Description" rows="3" class="form-control"></textarea>
-            <span asp-validation-for="Tutorial.Description" class="text-danger"></span>
-         </div>
-        <div class="mb-3">
-            <label asp-for="Tutorial.CategoryId"></label>
-            <select asp-for="Tutorial.CategoryId" asp-items="@Model.CategoryList" class="form-select">
-            <option disabled selected>--Select Category</option>
-            </select>
-         </div>
-         <div class="mb-3">
-            <label asp-for="Tutorial.SubcategoryId"></label>
-            <select asp-for="Tutorial.SubcategoryId" asp-items="@Model.SubcategoryList" class="form-select">
-            <option disabled selected>--Select Subcategory</option>
-            </select>
-         </div>
-         <div class="mb-3">
-            <label asp-for="Tutorial.SourceId"></label>
-            <select asp-for="Tutorial.SourceId" asp-items="@Model.SourceList" class="form-select">
-            <option disabled selected>--Select Source--</option>
-            </select>
-         </div>
-         <div class="mb-3">
-            <label asp-for="Tutorial.Link"></label>
-            <input asp-for="Tutorial.Link" class="form-control" />
-            <span asp-validation-for="Tutorial.Link" class="text-danger"></span>
-         </div>
+         <div class="mt-2">
         @if(Model.Tutorial.Id != 0)
         {
             <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
@@ -59,6 +61,7 @@
          <a asp-controller="Tutorial" asp-action="Index" class="btn btn-secondary" style="width:150px">
              Back to List
          </a>
+         </div>
     </div>
 </form>
     

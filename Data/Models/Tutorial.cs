@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,6 +16,7 @@ namespace Data.Models
         public string Description { get; set; }
         [ValidateNever]
         public string ImgUrl { get; set; }
+        [Required]
         public int SourceId { get; set; }
         [ValidateNever]
         public Source Source { get; set; }

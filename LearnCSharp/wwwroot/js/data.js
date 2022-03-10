@@ -5,13 +5,13 @@ $(document).ready(function () {
 });
 
 function loadDataTable() {
-    dataTable = $('#tblData').DataTable({
+    dataTable = $(this.#table).DataTable({
         "ajax": {
             "url": "/Admin/Tutorial/GetAll"
         },
         "columns": [
-            { "data": "title", "width": "15%" },
-            { "data": "author", "width": "15%" }
+            { "data": "Title", "width": "15%" },
+            { "data": "Author", "width": "15%" },
         ]
     });
 }

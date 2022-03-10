@@ -136,8 +136,8 @@ namespace LearnCSharp.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var productList = _unitOfWork.Tutorial.GetAll();
-            return Json(new { data = productList});
+            var tutorialtList = _unitOfWork.Tutorial.GetAll();
+            return Json(new { data = tutorialtList });
         }
         #endregion
     }
