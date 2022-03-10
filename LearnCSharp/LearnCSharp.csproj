@@ -28,5 +28,6 @@
   <ItemGroup>
     <Folder Include="wwwroot\img\tutorial\" />
   </ItemGroup>
+	
 
 </Project>
