@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220309221428_AddedSourceToDb")]
-    partial class AddedSourceToDb
+    [Migration("20220314183241_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -121,8 +121,7 @@ namespace Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("SourceId")
-                        .IsUnique();
+                    b.HasIndex("SourceId");
 
                     b.HasIndex("SubcategoryId");
 
@@ -168,8 +167,8 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Data.Models.Source", "Source")
-                        .WithOne("Tutorial")
-                        .HasForeignKey("Data.Models.Tutorial", "SourceId")
+                        .WithMany("Tutorials")
+                        .HasForeignKey("SourceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -202,7 +201,7 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.Source", b =>
                 {
-                    b.Navigation("Tutorial");
+                    b.Navigation("Tutorials");
                 });
 
             modelBuilder.Entity("Data.Models.Tutorial", b =>

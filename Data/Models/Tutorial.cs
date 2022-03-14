@@ -17,9 +17,6 @@ namespace Data.Models
         [ValidateNever]
         public string ImgUrl { get; set; }
         [Required]
-        public int SourceId { get; set; }
-        [ValidateNever]
-        public Source Source { get; set; }
         public string Link { get; set; }
         public ICollection<UserScore>? UserScores { get; set; }
         [Required]
@@ -30,7 +27,9 @@ namespace Data.Models
         public int SubcategoryId { get; set; }
         [ValidateNever]
         public Subcategory Subcategory { get; set; }
-
-
+        [Required]
+        public int SourceId { get; set; }
+        [ValidateNever]
+        public Source Source { get; set; }
     }
 }

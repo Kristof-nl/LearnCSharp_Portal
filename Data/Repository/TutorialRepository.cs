@@ -30,6 +30,8 @@ namespace Data.Repository
                 objFromDb.Category = obj.Category;
                 objFromDb.SubcategoryId = obj.SubcategoryId;
                 objFromDb.Subcategory = obj.Subcategory;
+                objFromDb.Source = obj.Source;
+                objFromDb.SourceId = obj.SourceId;
                 if (objFromDb.ImgUrl != null)
                 {
                     objFromDb.ImgUrl = obj.ImgUrl;

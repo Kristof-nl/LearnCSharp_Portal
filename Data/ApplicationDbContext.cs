@@ -16,15 +16,16 @@ namespace Data
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Subcategory> Subcategories { get; set; }
-        public DbSet<Tutorial> Tutorials { get; set; }
         public DbSet<Source> Sources { get; set; }
+        public DbSet<Tutorial> Tutorials { get; set; }
+        
 
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            var orderEntityBuilder = modelBuilder.Entity<Tutorial>();
-            orderEntityBuilder.HasIndex(t => t.SourceId).IsUnique(false);
-
-        }
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    var orderEntityBuilder = modelBuilder.Entity<Tutorial>();
+        //    orderEntityBuilder.HasIndex(t => t.SourceId).IsUnique(false);
+        //}
+       
     }
 }

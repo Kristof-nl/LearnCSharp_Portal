@@ -165,8 +165,8 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Data.Models.Source", "Source")
-                        .WithOne("Tutorial")
-                        .HasForeignKey("Data.Models.Tutorial", "SourceId")
+                        .WithMany("Tutorials")
+                        .HasForeignKey("SourceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -199,7 +199,7 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.Source", b =>
                 {
-                    b.Navigation("Tutorial");
+                    b.Navigation("Tutorials");
                 });
 
             modelBuilder.Entity("Data.Models.Tutorial", b =>
