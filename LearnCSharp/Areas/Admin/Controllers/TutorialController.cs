@@ -60,10 +60,9 @@ namespace LearnCSharp.Controllers
             else
             {
                 //Update
-
+                tutorialVM.Tutorial = _unitOfWork.Tutorial.GetFirstOrDefault(x => x.Id == id);
+                return View(tutorialVM);
             }
-
-            return View(tutorialVM);
         }
 
         //POST
@@ -81,14 +80,32 @@ namespace LearnCSharp.Controllers
                     var uploads = Path.Combine(wwwRootPath, @"img\tutorial");
                     var extension = Path.GetExtension(file.FileName);
 
+                    //Delete old image in edit action
+                    if (obj.Tutorial.ImgUrl != null)
+                    {
+                        var oldImagePath = Path.Combine(wwwRootPath, obj.Tutorial.ImgUrl.TrimStart('\\'));
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+
                     using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
                     {
                         file.CopyTo(fileStreams);
                     }
-                    obj.Tutorial.ImgUrl = @"img\tutorial" + fileName + extension;
+                    obj.Tutorial.ImgUrl = @"\img\tutorial\" + fileName + extension;
                 }
 
-                _unitOfWork.Tutorial.Add(obj.Tutorial);
+                if (obj.Tutorial.Id == 0)
+                {
+                    _unitOfWork.Tutorial.Add(obj.Tutorial);
+                }
+                else
+                {
+                    _unitOfWork.Tutorial.Update(obj.Tutorial);
+                }
+
                 _unitOfWork.Save();
                 TempData["success"] = "Tutorial created successfully";
                 return RedirectToAction("Index");
@@ -96,41 +113,6 @@ namespace LearnCSharp.Controllers
             return View(obj);
         }
 
-        //GET
-        public IActionResult Delete(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-
-            var tutorialFromDb = _unitOfWork.Tutorial.GetFirstOrDefault(i => i.Id == id);
-
-            if (tutorialFromDb == null)
-            {
-                return NotFound();
-            }
-
-            return View(tutorialFromDb);
-        }
-
-        //DELETE
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeletePOST(int? id)
-        {
-            var tutorialFromDb = _unitOfWork.Tutorial.GetFirstOrDefault(i => i.Id == id);
-
-            if (tutorialFromDb == null)
-            {
-                return NotFound();
-            }
-
-            _unitOfWork.Tutorial.Remove(tutorialFromDb);
-            _unitOfWork.Save();
-            TempData["success"] = "Tutorial deleted successfully";
-            return RedirectToAction("Index");
-        }
 
         #region API CALLS
         [HttpGet]
@@ -138,6 +120,28 @@ namespace LearnCSharp.Controllers
         {
             var tutorialtList = _unitOfWork.Tutorial.GetAll(includeProperties:"Category,Subcategory,UserScores,Source");
             return Json(new { data = tutorialtList });
+        }
+
+        //DELETE
+        [HttpDelete]
+        public IActionResult Delete(int? id)
+        {
+            var tutorialFromDb = _unitOfWork.Tutorial.GetFirstOrDefault(i => i.Id == id);
+
+            if (tutorialFromDb == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+
+            var oldImagePath = Path.Combine(_hostEnvironment.WebRootPath, tutorialFromDb.ImgUrl.TrimStart('\\'));
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+
+            _unitOfWork.Tutorial.Remove(tutorialFromDb);
+            _unitOfWork.Save();
+            return Json(new { success = true, message = "Delete Successful" });
         }
         #endregion
     }

@@ -20,14 +20,17 @@ namespace Data.Models
         public string Link { get; set; }
         public ICollection<UserScore>? UserScores { get; set; }
         [Required]
+        [Display(Name = "Category")]
         public int CategoryId { get; set; }
         [ValidateNever]
         public Category Category { get; set; }
         [Required]
+        [Display(Name = "Subcategory")]
         public int SubcategoryId { get; set; }
         [ValidateNever]
         public Subcategory Subcategory { get; set; }
         [Required]
+        [Display(Name = "Source")]
         public int SourceId { get; set; }
         [ValidateNever]
         public Source Source { get; set; }
