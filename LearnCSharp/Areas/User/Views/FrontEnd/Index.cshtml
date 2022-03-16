@@ -7,19 +7,21 @@
             <div class="row p-1">
                 <div class="col-12 p-2 d-flex justify-content-center" style="border:1px solid #008cba; border-radius: 5px;">
                     <div class="card">
-                        <div class="card-body ">
-                            <img src="@tutorial.ImgUrl" class="card-img-top rounded" height=185px/>
+                        <div class="card-body w-100">
+                            <img src="@tutorial.ImgUrl" class="card-img-top rounded" height=180px/>
                             <div class="pl-1 mt-2">
-                                <p class="card-title h6 text-dark">@tutorial.Title</p>
+                                <p class="card-title h6 text-dark text-center mb-1">@tutorial.Title</p>
                                 <p class="card-title text-info small">@tutorial.Author</p>
                             </div>
                             <div>
-                                <p class="small"><strike><b>Score</b></strike></p>
+                                <p class="small"> @tutorial.Subcategory.Name <span style="float : right;">@(Double.IsNaN(@tutorial.Score)?"No Score yet": @tutorial.Score) </span> </p>
                             </div>
                         </div>
-                            <a asp-action="Details" class="btn btn-primary form-check control" asp-route-tutorialId="@tutorial.Id">
+                        <div class="text-center mb-2">
+                            <a asp-action="Details" class="btn btn-primary btn-block form-check control" asp-route-tutorialId="@tutorial.Id">
                                 Details
                             </a>
+                         </div>
                     </div>
                 </div>
             </div>

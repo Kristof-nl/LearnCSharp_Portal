@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace Data.Models
 {
@@ -19,6 +20,8 @@ namespace Data.Models
         [Required]
         public string Link { get; set; }
         public ICollection<UserScore>? UserScores { get; set; }
+        [NotMapped]
+        public double Score => (UserScores.Sum(x => x.Score))/UserScores.Count;
         [Required]
         [Display(Name = "Category")]
         public int CategoryId { get; set; }

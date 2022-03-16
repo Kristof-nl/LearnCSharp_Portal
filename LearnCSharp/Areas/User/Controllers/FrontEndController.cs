@@ -19,9 +19,10 @@ namespace LearnCSharp.Controllers
 
         public IActionResult Index()
         {
-           IEnumerable<Tutorial> tutorialsList = _unitOfWork.Tutorial.GetAll(includeProperties: "Category,Subcategory,UserScores,Source").Where(x => x.Category.Name == "Front-End");
+            IEnumerable<Tutorial> tutorialsList = _unitOfWork.Tutorial.GetAll(includeProperties: "Category,Subcategory,UserScores,Source").Where(x => x.Category.Name == "Front-End");
 
-           return View(tutorialsList);
+
+            return View(tutorialsList);
         }
 
     }
