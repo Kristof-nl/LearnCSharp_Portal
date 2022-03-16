@@ -29,5 +29,13 @@ namespace LearnCSharp.Controllers
            return View(tutorialsListVM);
         }
 
+        public IActionResult Details(int id)
+        {
+            Tutorial tutorial = _unitOfWork.Tutorial.GetFirstOrDefault(x => x.Id == id, includeProperties: "Category,Subcategory,UserScores,Source");
+            TutorialWithScoreVM tutorialVM = _mapper.Map<Tutorial, TutorialWithScoreVM>(tutorial);
+
+            return View(tutorialVM);
+        }
+
     }
 }
