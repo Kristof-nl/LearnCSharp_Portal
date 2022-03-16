@@ -11,11 +11,11 @@ function loadDataTable() {
         },
         "bDestroy": true,
         "columns": [
-            { "data": "title", "width": "15%" },
+            { "data": "title", "width": "23%" },
             { "data": "author", "width": "15%" },
-            { "data": "category.name", "width": "15%" },
+            { "data": "category.name", "width": "11%" },
             { "data": "subcategory.name", "width": "15%" },
-            { "data": "source.name", "width": "15%" },
+            { "data": "source.name", "width": "11%" },
             {
                 "data": "id",
                 "render": function (data) {
