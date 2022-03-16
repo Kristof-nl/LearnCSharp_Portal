@@ -1,5 +1,4 @@
-﻿
-using Data;
+﻿using Data;
 using Data.Models;
 using Data.Models.ViewModels;
 using Data.Repository.IRepository;

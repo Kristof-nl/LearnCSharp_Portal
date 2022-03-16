@@ -15,11 +15,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-// Repositories
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-//builder.Services.AddAutoMapper(typeof(AutoMapperBankAccount).Assembly, typeof(AutoMapperTransaction).Assembly);
 
 var app = builder.Build();
 
