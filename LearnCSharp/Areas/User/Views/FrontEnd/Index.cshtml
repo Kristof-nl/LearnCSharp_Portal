@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Tutorial>
+
+<div class="row pb-3">    
+    @foreach(var tutorial in Model)
+    {
+        <div class="col-lg-4 col-md-6">
+            <div class="row p-1">
+                <div class="col-12 p-2 d-flex justify-content-center" style="border:1px solid #008cba; border-radius: 5px;">
+                    <div class="card">
+                        <div class="card-body ">
+                            <img src="@tutorial.ImgUrl" class="card-img-top rounded" height=185px/>
+                            <div class="pl-1 mt-2">
+                                <p class="card-title h6 text-dark">@tutorial.Title</p>
+                                <p class="card-title text-info small">@tutorial.Author</p>
+                            </div>
+                            <div>
+                                <p class="small"><strike><b>Score</b></strike></p>
+                            </div>
+                        </div>
+                            <a asp-action="Details" class="btn btn-primary form-check control" asp-route-tutorialId="@tutorial.Id">
+                                Details
+                            </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>
