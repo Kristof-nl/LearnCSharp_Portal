@@ -7,13 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace LearnCSharp.Areas.User.Controllers
 {
     [Area("User")]
-    public class BackEndController : Controller
+    public class MVCController : Controller
     {
-        private readonly ILogger<BackEndController> _logger;
+        private readonly ILogger<MVCController> _logger;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public BackEndController(ILogger<BackEndController> logger, IUnitOfWork unitOfWork, IMapper mapper)
+        public MVCController(ILogger<MVCController> logger, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
@@ -22,7 +22,7 @@ namespace LearnCSharp.Areas.User.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Tutorial> tutorialsList = _unitOfWork.Tutorial.GetAll(includeProperties: "Category,Subcategory,UserScores,Source").Where(x => x.Category.Name == "Back-End");
+            IEnumerable<Tutorial> tutorialsList = _unitOfWork.Tutorial.GetAll(includeProperties: "Category,Subcategory,UserScores,Source").Where(x => x.Category.Name == "MVC");
             IEnumerable<TutorialWithScoreVM> tutorialsListVM = _mapper.Map<IEnumerable<Tutorial>, IEnumerable<TutorialWithScoreVM>>(tutorialsList);
 
             return View(tutorialsListVM);

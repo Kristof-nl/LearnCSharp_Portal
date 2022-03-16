@@ -9,10 +9,9 @@
                 </div>
                 <div class="col-12 col-md-6 text-end pt-4 text-right">
                     <span class="badge bg-info pt-2" style="height:30px;">@Model.Category.Name</span>
-                    <span class="badge bg-warning pt-2" style="height:30px;">@Model.Subcategory.Name</span>
                     <span class="badge bg-success pt-2" style="height:30px;">@Model.Source.Name</span>
                     <span class="badge bg-danger pt-2" style="height:30px;">@(Double.IsNaN(@Model.Score)?"No Score yet": @Model.Score)</span>
-                     <span class="badge bg-secondary pt-2" style="height:30px;"><a href="@Model.Link" class="text-decoration-none text-primary">Link to the tutorial</a></span>
+                    <span class="badge bg-secondary pt-2" style="height:30px;"><a href="@Model.Link" class="text-decoration-none text-primary">Link to the tutorial</a></span>
                 </div>
             </div>
             <div class="card-body row container ">
@@ -39,4 +38,3 @@
             </div>
         </div>
     <div style="margin-bottom:50px"></div>
-
