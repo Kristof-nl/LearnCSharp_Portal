@@ -1,28 +1,29 @@
-﻿@model TutorialWithScoreVM
+﻿@model LearningList
 
-    <input hidden asp-for="Id" />
+<form method="post">
+    <input hidden asp-for="TutorialId" />
         <div class="pt-4">
             <div class="card-header bg-primary row" style="border-radius: 15px">
                 <div class="col-12 col-md-6">
-                    <h1 class="text-white">@Model.Title</h1>
-                    <p class="text-warning">@Model.Author</p>
+                    <h1 class="text-white">@Model.Tutorial.Title</h1>
+                    <p class="text-warning">@Model.Tutorial.Author</p>
                 </div>
                 <div class="col-12 col-md-6 text-end pt-4 text-right">
-                    <span class="badge bg-info pt-2" style="height:30px;">@Model.Category.Name</span>
-                    <span class="badge bg-warning pt-2" style="height:30px;">@Model.Subcategory.Name</span>
-                    <span class="badge bg-success pt-2" style="height:30px;">@Model.Source.Name</span>
-                    <span class="badge bg-danger pt-2" style="height:30px;">@(Double.IsNaN(@Model.Score)?"No Score yet": @Model.Score)</span>
-                     <span class="badge bg-secondary pt-2" style="height:30px;"><a href="@Model.Link" class="text-decoration-none text-primary">Link to the tutorial</a></span>
+                    <span class="badge bg-info pt-2" style="height:30px;">@Model.Tutorial.Category.Name</span>
+                    <span class="badge bg-warning pt-2" style="height:30px;">@Model.Tutorial.Subcategory.Name</span>
+                    <span class="badge bg-success pt-2" style="height:30px;">@Model.Tutorial.Source.Name</span>
+                    <span class="badge bg-danger pt-2" style="height:30px;">@(Double.IsNaN(ViewBag.Score)?"No Score yet": ViewBag.Score)</span>
+                     <span class="badge bg-secondary pt-2" style="height:30px;"><a href="@Model.Tutorial.Link" class="text-decoration-none text-primary">Link to the tutorial</a></span>
                 </div>
             </div>
             <div class="card-body row container ">
                 <div class="container rounded p-2">
                     <div class="row d-flex justify-content-center">
                         <div class="col-12 col-lg-7 justify-content-center">
-                            <img src="@Model.ImgUrl" width="100%" height="350px" class="rounded" />
+                            <img src="@Model.Tutorial.ImgUrl" width="100%" height="350px" class="rounded" />
                         </div>
                             <div class="row">
-                                <p class="text-secondary">@Html.Raw(Model.Description)</p>
+                                <p class="text-secondary">@Html.Raw(Model.Tutorial.Description)</p>
                             </div>
                     </div>
                 </div>
@@ -32,10 +33,10 @@
                     <div class="col-12 col-md-6">
                         <a class="btn btn-secondary form-control mb-2 " style="height:40px;" asp-action="Index" >Back to Home</a>
                     </div>
-                    <div class="col-12 col-md-6 pb-1">
-                        <button class="btn btn-primary form-control mb-2" style="height:40px;" asp-controller="" asp-action="AddToList" asp-route-Id="@Model.Id">Add to Learn List</button>
+                    <div class="col-12 col-md-6 pb-1 mb-2">
+                        <button type="submit" value="Add to Learning List" class="btn btn-primary form-control" style="height:40px;">Add to Learning List</button>
                     </div>
                 </div>
             </div>
         </div>
-
+</form>

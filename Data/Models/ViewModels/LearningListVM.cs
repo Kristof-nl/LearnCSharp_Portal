@@ -15,7 +15,6 @@ namespace Data.Models.ViewModels
         public string ApplicationUserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         public List<Tutorial> ArchivedTutorials { get; set; }
-        public double Score => (Tutorial.UserScores.Sum(x => x.Score)) / Tutorial.UserScores.Count;
 
     }
 }

@@ -14,11 +14,11 @@
                                 <p class="card-title text-primary small">@tutorial.Author</p>
                             </div>
                             <div>
-                                <p class="small"> @tutorial.Subcategory.Name <span style="float : right;">@(Double.IsNaN(@tutorial.Score)?"No Score yet": @tutorial.Score) </span> </p>
+                                <p class="small"> @tutorial.Subcategory.Name <span style="float : right;">@(Double.IsNaN(@tutorial.Score)?"No Score yet": @Math.Round(tutorial.Score, 2)) </span> </p>
                             </div>
                         </div>
                         <div class="text-center mb-2">
-                            <a asp-action="Details" class="btn btn-primary btn-block form-check control" asp-route-Id="@tutorial.Id">
+                            <a asp-action="Details" class="btn btn-primary btn-block form-check control" asp-route-productId="@tutorial.Id" asp-route-Score="@Math.Round(tutorial.Score, 2)">
                                 Details
                             </a>
                          </div>

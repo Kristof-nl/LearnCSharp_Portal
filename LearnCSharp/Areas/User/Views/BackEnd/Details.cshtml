@@ -1,4 +1,4 @@
-﻿@model LearningListVM
+﻿@model LearningList
 
 <form method="post">
     <input hidden asp-for="TutorialId" />
@@ -12,7 +12,7 @@
                     <span class="badge bg-info pt-2" style="height:30px;">@Model.Tutorial.Category.Name</span>
                     <span class="badge bg-warning pt-2" style="height:30px;">@Model.Tutorial.Subcategory.Name</span>
                     <span class="badge bg-success pt-2" style="height:30px;">@Model.Tutorial.Source.Name</span>
-                    <span class="badge bg-danger pt-2" style="height:30px;">@(Double.IsNaN(@Model.Score)?"No Score yet": @Model.Score)</span>
+                    <span class="badge bg-danger pt-2" style="height:30px;">@(Double.IsNaN(ViewBag.Score)?"No Score yet": ViewBag.Score)</span>
                      <span class="badge bg-secondary pt-2" style="height:30px;"><a href="@Model.Tutorial.Link" class="text-decoration-none text-primary">Link to the tutorial</a></span>
                 </div>
             </div>

@@ -18,7 +18,7 @@
                             </div>
                         </div>
                         <div class="text-center mb-2">
-                            <a asp-action="Details" class="btn btn-primary btn-block form-check control" asp-route-Id="@tutorial.Id">
+                            <a asp-action="Details" class="btn btn-primary btn-block form-check control" asp-route-productId="@tutorial.Id" asp-route-Score="@Math.Round(tutorial.Score, 2)">
                                 Details
                             </a>
                          </div>
