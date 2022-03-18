@@ -21,7 +21,6 @@ namespace Data
         public DbSet<Tutorial> Tutorials { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<LearningList> LearningLists { get; set; }
-        public DbSet<ArchivedTutorials> ArchivedTutorials { get; set; }
 
 
 

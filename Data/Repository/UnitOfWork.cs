@@ -19,7 +19,6 @@ namespace Data.Repository
             Source = new SourceRepository(_db);
             ApplicationUser = new ApplicationUserRepository(_db);
             LearningList = new LearningListRepository(_db);
-            ArchivedTutorials = new ArchivedTutorialsRepository(_db);
         }
 
         public ICategoryRepository Category { get; private set; }
@@ -28,8 +27,7 @@ namespace Data.Repository
         public ISourceRepository Source { get; private set; }
         public IApplicationUserRepository ApplicationUser { get; private set; }
         public ILearningListRepository LearningList { get; private set; }
-        public IArchivedTutorialsRepository ArchivedTutorials { get; private set; }
-
+        
 
         public void Save()
         {

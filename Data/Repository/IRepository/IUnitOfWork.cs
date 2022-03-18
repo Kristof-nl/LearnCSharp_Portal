@@ -13,7 +13,6 @@ namespace Data.Repository.IRepository
         ITutorialRepository Tutorial { get; }
         ISourceRepository Source { get; }
         IApplicationUserRepository ApplicationUser { get; }
-        IArchivedTutorialsRepository ArchivedTutorials { get; }
         ILearningListRepository LearningList { get; }
 
         void Save();

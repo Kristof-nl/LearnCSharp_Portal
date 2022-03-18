@@ -4,6 +4,7 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220318174728_AddedApplicationUserId")]
+    partial class AddedApplicationUserId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,8 +49,10 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
+                    b.Property<int>("ApplicationUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ApplicationUserId1")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("TutorialId")
@@ -56,7 +60,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("ApplicationUserId1");
 
                     b.HasIndex("TutorialId");
 
@@ -400,9 +404,7 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ApplicationUserId1");
 
                     b.HasOne("Data.Models.Tutorial", "Tutorial")
                         .WithMany()

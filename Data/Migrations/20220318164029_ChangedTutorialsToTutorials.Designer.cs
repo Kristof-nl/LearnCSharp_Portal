@@ -4,6 +4,7 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220318164029_ChangedTutorialsToTutorials")]
+    partial class ChangedTutorialsToTutorials
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +23,19 @@ namespace Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Data.Models.ArchivedTutorials", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ArchivedTutorials");
+                });
 
             modelBuilder.Entity("Data.Models.Category", b =>
                 {
@@ -48,8 +63,10 @@ namespace Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ApplicationUserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ArchivedTutorialsId")
+                        .HasColumnType("int");
 
                     b.Property<int>("TutorialId")
                         .HasColumnType("int");
@@ -57,6 +74,8 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("ArchivedTutorialsId");
 
                     b.HasIndex("TutorialId");
 
@@ -110,6 +129,9 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int?>("ArchivedTutorialsId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Author")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -124,12 +146,6 @@ namespace Data.Migrations
                     b.Property<string>("ImgUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("LearningListId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("LearningListId1")
-                        .HasColumnType("int");
 
                     b.Property<string>("Link")
                         .IsRequired()
@@ -147,11 +163,9 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ArchivedTutorialsId");
+
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("LearningListId");
-
-                    b.HasIndex("LearningListId1");
 
                     b.HasIndex("SourceId");
 
@@ -400,7 +414,11 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("Data.Models.ArchivedTutorials", "ArchivedTutorials")
+                        .WithMany()
+                        .HasForeignKey("ArchivedTutorialsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -411,6 +429,8 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.Navigation("ApplicationUser");
+
+                    b.Navigation("ArchivedTutorials");
 
                     b.Navigation("Tutorial");
                 });
@@ -426,19 +446,15 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.Tutorial", b =>
                 {
+                    b.HasOne("Data.Models.ArchivedTutorials", null)
+                        .WithMany("Tutorials")
+                        .HasForeignKey("ArchivedTutorialsId");
+
                     b.HasOne("Data.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Data.Models.LearningList", null)
-                        .WithMany("ArchivedTutorials")
-                        .HasForeignKey("LearningListId");
-
-                    b.HasOne("Data.Models.LearningList", null)
-                        .WithMany("LearnedTutorials")
-                        .HasForeignKey("LearningListId1");
 
                     b.HasOne("Data.Models.Source", "Source")
                         .WithMany("Tutorials")
@@ -519,16 +535,14 @@ namespace Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Data.Models.ArchivedTutorials", b =>
+                {
+                    b.Navigation("Tutorials");
+                });
+
             modelBuilder.Entity("Data.Models.Category", b =>
                 {
                     b.Navigation("Subcategories");
-                });
-
-            modelBuilder.Entity("Data.Models.LearningList", b =>
-                {
-                    b.Navigation("ArchivedTutorials");
-
-                    b.Navigation("LearnedTutorials");
                 });
 
             modelBuilder.Entity("Data.Models.Source", b =>

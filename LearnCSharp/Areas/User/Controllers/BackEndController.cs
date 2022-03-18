@@ -2,7 +2,9 @@
 using Data.Models;
 using Data.Models.ViewModels;
 using Data.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace LearnCSharp.Areas.User.Controllers
 {
@@ -30,10 +32,35 @@ namespace LearnCSharp.Areas.User.Controllers
 
         public IActionResult Details(int id)
         {
-            Tutorial tutorial = _unitOfWork.Tutorial.GetFirstOrDefault(x => x.Id == id, includeProperties: "Category,Subcategory,UserScores,Source");
-            TutorialWithScoreVM tutorialVM = _mapper.Map<Tutorial, TutorialWithScoreVM>(tutorial);
+            LearningList listObj = new()
+            {
+                TutorialId = id,
+                Tutorial = _unitOfWork.Tutorial.GetFirstOrDefault(x => x.Id == id, includeProperties: "Category,Subcategory,UserScores,Source"),
+                ArchivedTutorials = new(),
+                LearnedTutorials = new()
+                
+            };
+            
 
-            return View(tutorialVM);
+            LearningListVM learningListVM = _mapper.Map<LearningList, LearningListVM>(listObj);
+
+            return View(learningListVM);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public IActionResult Details(LearningList learningList)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            learningList.ApplicationUserId = claim.Value;
+            
+
+            //Tutorial tutorial = _unitOfWork.Tutorial.GetFirstOrDefault(x => x.Id == id, includeProperties: "Category,Subcategory,UserScores,Source");
+            //TutorialWithScoreVM tutorialVM = _mapper.Map<Tutorial, TutorialWithScoreVM>(tutorial);
+
+            return View();
         }
 
     }
