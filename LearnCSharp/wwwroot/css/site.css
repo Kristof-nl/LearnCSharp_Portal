@@ -1,12 +1,24 @@
+html {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+body {
+    position: relative;
+    margin-bottom: 20px;
+    padding-bottom: 2.5rem;
+    min-height: 100%;
+}
+
 .footer {
-    position: fixed;
+    position:absolute;
     bottom: 0;
     width: 100%;
     white-space: nowrap;
-    height: 60px;
-    line-height: 60px;
+    height: 55px;
+    line-height: 55px;
 }
 
 .card {
-    height: 380px;
+    height: 377px;
 }

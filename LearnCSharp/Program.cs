@@ -23,6 +23,11 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+//Newtonsoft
+builder.Services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
 //Add EmailSender
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
