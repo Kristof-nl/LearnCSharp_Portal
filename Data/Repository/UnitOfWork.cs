@@ -17,12 +17,19 @@ namespace Data.Repository
             Subcategory = new SubcategoryRepository(_db);
             Tutorial = new TutorialRepository(_db);
             Source = new SourceRepository(_db);
+            ApplicationUser = new ApplicationUserRepository(_db);
+            LearningList = new LearningListRepository(_db);
+            ArchivedTutorials = new ArchivedTutorialsRepository(_db);
         }
 
         public ICategoryRepository Category { get; private set; }
         public ISubcategoryRepository Subcategory { get; private set; }
         public ITutorialRepository Tutorial { get; private set; }
         public ISourceRepository Source { get; private set; }
+        public IApplicationUserRepository ApplicationUser { get; private set; }
+        public ILearningListRepository LearningList { get; private set; }
+        public IArchivedTutorialsRepository ArchivedTutorials { get; private set; }
+
 
         public void Save()
         {

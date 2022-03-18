@@ -6,14 +6,9 @@ using System.Threading.Tasks;
 
 namespace Data.Models
 {
-    public class LearningList
+    public class ArchivedTutorials
     {
         public int Id { get; set; }
         public IEnumerable<Tutorial> Tutorials { get; set; }
-        public ApplicationUser ApplicationUser { get; set; }
-        public int ArchivedTutorialsId { get; set; }
-        public ArchivedTutorials ArchivedTutorials { get; set; }
-
     }
 }
-    
