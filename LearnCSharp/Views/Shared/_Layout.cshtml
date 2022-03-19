@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<IdentityUser> signInManager;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -35,20 +37,26 @@
         <li>
              <a class="nav-link" asp-area="User" asp-controller="MVC" asp-action="Index">MVC</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
-          <div class="dropdown-menu">
-            <a class="nav-link text-primary" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
-            <a class="nav-link text-primary" asp-area="Admin" asp-controller="Source" asp-action="Index">Source</a>
-            <a class="nav-link text-primary" asp-area="Admin" asp-controller="Tutorial" asp-action="Index">Turorial</a>
-          </div>
-        </li>
+            @if (signInManager.IsSignedIn(User))
+            {
+             <li>
+                <a class="nav-link" asp-area="User" asp-controller="LearningList" asp-action="Index">Learning List</a>
+             </li>        
+            }
+       
+            @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+            {
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
+                      <div class="dropdown-menu">
+                        <a class="nav-link text-primary" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
+                        <a class="nav-link text-primary" asp-area="Admin" asp-controller="Source" asp-action="Index">Source</a>
+                        <a class="nav-link text-primary" asp-area="Admin" asp-controller="Tutorial" asp-action="Index">Turorial</a>
+                      </div>
+                </li>          
+            }
       </ul>
-      <partial name="_LoginPartial" />
-      @*<form class="d-flex">
-        <input class="form-control me-sm-2" type="text" placeholder="Search">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-      </form>*@
+      <partial name="_LoginPartial" />  
     </div>
   </div>
 </nav>

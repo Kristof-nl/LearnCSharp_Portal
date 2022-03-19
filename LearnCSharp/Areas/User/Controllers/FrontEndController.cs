@@ -5,6 +5,7 @@ using Data.Repository.IRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Utility;
 
 namespace LearnCSharp.Controllers
 {
@@ -33,18 +34,7 @@ namespace LearnCSharp.Controllers
 
         public IActionResult Details(int productId, double score)
         {
-            if(score / 100> 1)
-            {
-                ViewBag.Score = Math.Round(score/100, 2);
-            }
-            else if (score / 10 > 1)
-            {
-                ViewBag.Score = Math.Round(score / 10, 2);
-            }
-            else
-            {
-                ViewBag.Score = Math.Round(score, 2);
-            }
+            ViewBag.Score = ViewBagScore.CalculateScore(score);
 
             LearningList listObj = new()
             {
@@ -60,7 +50,8 @@ namespace LearnCSharp.Controllers
         [Authorize]
         public IActionResult Details(LearningList learningList)
         {
-            Tutorial tutorial = _unitOfWork.Tutorial.GetFirstOrDefault(x => x.Id == learningList.TutorialId, includeProperties: "Category,Subcategory,UserScores,Source");
+            Tutorial tutorial = _unitOfWork.Tutorial.GetFirstOrDefault(
+                x => x.Id == learningList.TutorialId, includeProperties: "Category,Subcategory,UserScores,Source");
 
             //Check userdId in Db
             var claimsIdentity = (ClaimsIdentity)User.Identity;
@@ -68,8 +59,10 @@ namespace LearnCSharp.Controllers
             learningList.ApplicationUserId = claim.Value;
 
 
-            LearningList learningListFromDb = _unitOfWork.LearningList.GetFirstOrDefault(x => x.ApplicationUserId == claim.Value, includeProperties: "LearnedTutorials,ArchivedTutorials");
+            LearningList learningListFromDb = _unitOfWork.LearningList.GetFirstOrDefault(
+                x => x.ApplicationUserId == claim.Value, includeProperties: "LearnedTutorials,ArchivedTutorials");
 
+            //Check of user has all his learning list
             if (learningListFromDb == null)
             {
                 learningList.LearnedTutorials = new();
@@ -78,11 +71,26 @@ namespace LearnCSharp.Controllers
             }
             else
             {
-                learningListFromDb.LearnedTutorials.Add(tutorial);
+                //Check of user has all tutorial in his learning list(also in archived tutorials)
+                if (learningListFromDb.LearnedTutorials.Contains(tutorial))
+                {
+                    TempData["Error"] = $"Tutorial {tutorial.Title} is already in your learning list. Please select another tutorial to learn.";
+                    return RedirectToAction("Index");
+                }
+                else if (learningListFromDb.ArchivedTutorials.Contains(tutorial))
+                {
+                    TempData["Error"] = $"Tutorial {tutorial.Title} is already in your archived tutorial section. Please select another tutorial to learn.";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    learningListFromDb.LearnedTutorials.Add(tutorial);
+                }
             }
 
             _unitOfWork.Save();
 
+            TempData["success"] = "Tutorial added to your learning list";
             return RedirectToAction(nameof(Index));
         }
 

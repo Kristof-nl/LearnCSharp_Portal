@@ -1,0 +1,107 @@
+﻿@model LearningList
+
+<div class="container mt-4 rounded>
+	<div class="col-12">
+		<div class="card-header bg-primary text-light">
+			<div class="row">
+				<div class="col-6  pt-2">
+					You Learning List
+				</div>
+				<div class="col-6 text-end">
+					<a asp-area="Customer" asp-controller="Home" asp-action="Index" class="btn btn-secondary btn-sm">Back to Home Page</a>
+				</div>
+				</div>
+		</div>
+		<div class="card-body">
+			@foreach(var item in Model.LearnedTutorials)
+			{
+				<div class="row mb-2 " style="border:solid">
+					<div class="col-lg-2 text-center py-2">
+						<img src="@item.ImgUrl" class="rounded" width="100%" />
+					</div>
+					<div class="col-8 col-lg-6 py-4 mt-4 text-start fw-bold">
+						@item.Title
+					</div>
+					<div class="col-4 col-lg-3 py-4 mt-4  ">
+						@item.Author
+					</div>
+				</div>
+			}
+		</div> 
+			
+		<div class="card-footer">Footer</div>
+	</div>
+</div>
+
+
+@*<form method="post">
+	<br />
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-light ml-0">
+				<div class="row">
+					<div class="col-6  pt-2">
+						You Learning List
+					</div>
+					<div class="col-6 text-right">
+						<a asp-area="Customer" asp-controller="Home" asp-action="Index" class="btn btn-secondary btn-sm">Back to Home Page</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="card-body">
+				@foreach(var item in Model.LearnedTutorials){
+				<div class="row">
+					<div class="d-none d-lg-block col-lg-1 text-center py-2">
+						<img src="@item.ImgUrl" class="rounded" width="100%" />
+					</div>
+					<div class="col-12 col-lg-6 pt-md-3">
+						<h5><strong>@item.Title</strong></h5>
+					</div>
+					<div class="col-12  col-lg-5 text-left row">
+						<div class="col-5 text-md-left pt-4">
+							<h6>@item.Author</h6>
+						</div>
+						<div class="col-5 col-sm-3 col-lg-5 pt-2">
+							<div class="w-75 btn-group" role="group">
+								<a  asp-action="plus" asp-route-cartId="@item.Id" class="btn btn-primary">
+									<i class="bi bi-plus-square"></i>
+								</a> &nbsp;
+								<a asp-action="minus" asp-route-cartId="@item.Id" class="btn btn-warning">
+									<i class="bi bi-dash-square"></i>
+								</a>
+							</div>
+
+						</div>
+						<div class="col-2 col-sm-3 col-lg-2 text-left pt-2">
+							<a asp-action="remove" asp-route-cartId="@item.Id" class="btn btn-danger">
+								<i class="bi bi-trash-fill"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+				<hr />
+				}
+				<div class="row">
+					<div class="col-12 col-md-6 offset-md-6 col-lg-4 offset-lg-8 pr-4">
+						<ul class="list-group">
+							<li class="list-group-item d-flex justify-content-between bg-light">
+								<span class="text-info"> Total Tutorials</span>
+								<strong class="text-info">@Model.LearnedTutorials.Count</strong>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="card-footer">
+				<div class="card-footer row">
+					<div class="col-sm-12 col-lg-4 col-md-6 offset-lg-8 offset-md-6 ">
+						<a asp-action="Summary" class="btn btn-success form-control">Summary</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>*@

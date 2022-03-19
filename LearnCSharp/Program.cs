@@ -2,7 +2,6 @@ using Data;
 using Data.Repository;
 using Data.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Utility;
@@ -30,6 +29,15 @@ builder.Services.AddControllersWithViews()
 
 //Add EmailSender
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
+
+//Configure application cookie
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = $"/Identity/Account/Login";
+    options.LogoutPath = $"/Identity/Account/Logout";
+    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+});
+
 
 var app = builder.Build();
 
