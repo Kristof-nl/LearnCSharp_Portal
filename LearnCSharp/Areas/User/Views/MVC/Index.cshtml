@@ -9,13 +9,13 @@
                     <div class="card w-75" style="border:1px solid #8f96e3; border-radius: 5px;">
                         <div class="card-body" >
                             <img src="@tutorial.ImgUrl" class="card-img-top rounded" height=175px/>
-                            <div class="pl-1 mt-2">
-                                <p class="card-title h6 text-dark text-center mb-2">@tutorial.Title</p>
-                                <p class="card-title text-primary small">@tutorial.Author</p>
+                            <div class="mt-2 pl-1 mt-2">
+                                <p class="card-title h6 text-dark text-center mb-3">@tutorial.Title</p>
+                                <p class="card-title text-primary small">@tutorial.Author
+                                <span class="text-dark" style="float : right;">@(Double.IsNaN(@tutorial.Score)?"No Score yet": @tutorial.Score) </span> 
+                                </p>
                             </div>
-                            <div>
-                                <p class="small"><span style="float : right;">@(Double.IsNaN(@tutorial.Score)?"No Score yet": @tutorial.Score) </span> </p>
-                            </div>
+                            
                         </div>
                         <div class="text-center mb-2">
                             <a asp-action="Details" class="btn btn-primary btn-block form-check control" asp-route-productId="@tutorial.Id" asp-route-Score="@tutorial.Score">
