@@ -66,6 +66,7 @@ namespace LearnCSharp.Areas.User.Controllers
             {
                 learningList.LearnedTutorials = new();
                 learningList.ArchivedTutorials = new();
+                learningList.LearnedTutorials.Add(tutorial);
                 _unitOfWork.LearningList.Add(learningList);
             }
             else
