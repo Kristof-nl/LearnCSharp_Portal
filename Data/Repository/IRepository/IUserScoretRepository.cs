@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Data.Repository.IRepository
 {
-    public interface ILearningListRepository : IRepository<LearningList>
+    public interface IUserScoreRepository : IRepository<UserScore>
     {
-        //void Update(Category obj);
+        
     }
 }

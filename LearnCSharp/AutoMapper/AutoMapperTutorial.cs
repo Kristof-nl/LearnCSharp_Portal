@@ -9,6 +9,7 @@ namespace LearnCSharp.AutoMapper
         public AutoMapperTutorial()
         {
             CreateMap<Tutorial, TutorialWithScoreVM>().ReverseMap();
+            CreateMap<Tutorial, TutorialWithScorePostVM>().ReverseMap();
         }
        
     }

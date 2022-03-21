@@ -16,9 +16,6 @@ namespace Data.Repository
             _db = db;
         }
 
-        //public void Update(LearningList obj)
-        //{
-        //    _db.LearningLists.Update(obj);
-        //}
+   
     }
 }

@@ -33,9 +33,70 @@ namespace LearnCSharp.Areas.User.Controllers
             return View(userLearningList);
         }
 
-        public IActionResult Archived()
+        
+        public IActionResult Archive(int? id)
         {
-            return View();
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var tutorialFromDb = _unitOfWork.Tutorial.GetFirstOrDefault(i => i.Id == id);
+
+            if (tutorialFromDb == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.Score = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+
+            TutorialWithScorePostVM tutorialPost = _mapper.Map<Tutorial, TutorialWithScorePostVM>(tutorialFromDb);
+
+            return View(tutorialPost);
+        }
+
+
+        //Archive tutorial
+        [HttpPost, ActionName("Archive")]
+        [ValidateAntiForgeryToken]
+        public IActionResult ArchivePOST(TutorialWithScorePostVM tutorialPost)
+        {
+            var tutorialFromDb = _unitOfWork.Tutorial.GetFirstOrDefault(i => i.Id == tutorialPost.Id);
+
+            if (tutorialFromDb == null)
+            {
+                return NotFound();
+            }
+
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+            LearningList userLearningList = _unitOfWork.LearningList.GetFirstOrDefault(x => x.ApplicationUserId == claim.Value, includeProperties: "LearnedTutorials,ArchivedTutorials");
+
+            //Remove tutorial from Learning List
+            userLearningList.LearnedTutorials.Remove(tutorialFromDb);
+
+            //Add tutorial to Archived Turotials List
+            userLearningList.ArchivedTutorials.Add(tutorialFromDb);
+
+            //Add user score
+            int score = tutorialPost.Score;
+            UserScore userScore = new()
+            {
+                Score = score,
+            };
+
+          
+
+
+            userScore.Tutorial = tutorialFromDb;
+
+            tutorialFromDb.UserScores.Add(userScore);
+
+            _unitOfWork.Save();
+            TempData["success"] = "Tutorial moved successfully to the Archived Turotials List";
+            return RedirectToAction("Index");
         }
 
     }
