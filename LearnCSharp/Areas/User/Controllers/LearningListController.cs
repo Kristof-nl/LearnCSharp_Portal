@@ -2,6 +2,7 @@
 using Data.Models;
 using Data.Models.ViewModels;
 using Data.Repository.IRepository;
+using LearnCSharp.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -29,6 +30,12 @@ namespace LearnCSharp.Areas.User.Controllers
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
             LearningList userLearningList = _unitOfWork.LearningList.GetFirstOrDefault(x => x.ApplicationUserId == claim.Value, includeProperties: "LearnedTutorials,ArchivedTutorials");
+
+            if(userLearningList == null)
+            {
+                TempData["error"] = "Your list is empty. Please add first a tutorial.";
+                return RedirectToAction("Index", "Home");
+            }
 
             return View(userLearningList);
         }
@@ -87,12 +94,10 @@ namespace LearnCSharp.Areas.User.Controllers
                 Score = score,
             };
 
-          
-
+            _unitOfWork.UserScore.Add(userScore);
 
             userScore.Tutorial = tutorialFromDb;
 
-            tutorialFromDb.UserScores.Add(userScore);
 
             _unitOfWork.Save();
             TempData["success"] = "Tutorial moved successfully to the Archived Turotials List";

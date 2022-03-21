@@ -14,6 +14,7 @@ namespace Data.Repository.IRepository
         ISourceRepository Source { get; }
         IApplicationUserRepository ApplicationUser { get; }
         ILearningListRepository LearningList { get; }
+        IUserScoreRepository UserScore { get; }
 
         void Save();
     }
