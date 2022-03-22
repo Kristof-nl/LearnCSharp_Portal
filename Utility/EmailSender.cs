@@ -20,12 +20,12 @@ namespace Utility
             emailToSend.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = htmlMessage };
 
             //Enviroment variable
-            var gmail = Environment.GetEnvironmentVariable("Email");
+            var gmail = Environment.GetEnvironmentVariable("EMAIL2");
 
             //send email
             using (var emailClient = new SmtpClient())
             {
-                emailClient.Connect("smtp.gmail.com", 578, MailKit.Security.SecureSocketOptions.StartTls);
+                emailClient.Connect("smtp.gmail.com", 465, true);
                 emailClient.Authenticate("test.identitymanager.test@gmail.com", gmail);
                 emailClient.Send(emailToSend);
                 emailClient.Disconnect(true);
