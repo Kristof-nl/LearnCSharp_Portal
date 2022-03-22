@@ -50,6 +50,7 @@ namespace LearnCSharp.Controllers
                 }),
             };
 
+
             if (id == null || id == 0)
             {
                 //Create tutorial
@@ -142,6 +143,12 @@ namespace LearnCSharp.Controllers
             _unitOfWork.Save();
             return Json(new { success = true, message = "Delete Successful" });
         }
+
+        //[HttpGet("Admin/Tutorial/Subcategories/{CategoryId}")]
+        //public IEnumerable<Subcategory> Subcategories(int categoryId)
+        //{
+        //    return _unitOfWork.Subcategory.GetAll(includeProperties:"Category").Where(x => x.Category.Id == categoryId);
+        //}
         #endregion
     }
 }
