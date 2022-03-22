@@ -2,13 +2,16 @@
 using Data.Models;
 using Data.Models.ViewModels;
 using Data.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Utility;
 
 namespace LearnCSharp.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class TutorialController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

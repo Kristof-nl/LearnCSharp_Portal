@@ -2,11 +2,14 @@
 using Data;
 using Data.Models;
 using Data.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Utility;
 
 namespace LearnCSharp.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class SubcategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
