@@ -26,7 +26,7 @@ namespace Utility
             using (var emailClient = new SmtpClient())
             {
                 emailClient.Connect("smtp.gmail.com", 465, true);
-                emailClient.Authenticate("test.identitymanager.test@gmail.com", gmail);
+                emailClient.Authenticate("learncsharp.mail@gmail.com", gmail);
                 emailClient.Send(emailToSend);
                 emailClient.Disconnect(true);
             }
